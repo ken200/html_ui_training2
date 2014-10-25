@@ -1,0 +1,67 @@
+﻿*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+}
+
+ul{
+    list-style:none;
+}
+
+
+/* タブ ***************************/
+
+.tab{
+    margin: 20px;
+    width: 460px;
+}
+
+.tab-item{
+    display: table;
+    table-layout: fixed;
+    width: 60%;
+}
+
+.tab-item-page{
+    display: table-cell;
+}
+
+.tab-item-page__title{
+    display: block;
+    width: 90%;
+    height: 100%;
+    font-size: 80%;
+    text-align: center;
+    margin-right: 10%;
+    background: #635f5f;
+    color: #c8c2c2;
+    padding: 5px;
+}
+
+.tab-item-page__content{
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #808080;
+}
+
+ .tab-item-page__title_active {
+    background: #c8c2c2;
+    color: #635f5f;
+}
+
+ .tab-item-page__content_active{
+     display: block;
+ }
+
+.tab-body{
+    width: 100%;
+    height: 200px;
+    background: #c8c2c2;
+    padding: 5px;
+}

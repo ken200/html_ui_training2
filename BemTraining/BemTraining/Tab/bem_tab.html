@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bem_tab.css" />
+    <script src="../Scripts/jquery-1.9.0.min.js"></script>
+    <script src="bem_tab.js"></script>
+</head>
+<body>
+
+    <div class="tab" id="tab1">
+        <ul class="tab-item">
+            <!-- タブページ -->
+            <li class="tab-item-page" data-tabno="1">
+                <a class="tab-item-page__title" href="#">タブ1</a>
+                <div class="tab-item-page__content" data-hoge="たぶ1">
+                    <p>タブページ１</p>
+                </div>
+            </li>
+            <!-- タブページ -->
+            <li class="tab-item-page" data-tabno="2">
+                <a class="tab-item-page__title" href="#">タブ2</a>
+                <div class="tab-item-page__content" data-hoge="たぶ2">
+                    <p>イメージ</p>
+                    <img src="http://dummyimage.com/300x100/000/fff">
+                </div>
+            </li>
+            <!-- タブページ -->
+            <li class="tab-item-page" data-tabno="3">
+                <a class="tab-item-page__title" href="#">タブ3</a>
+                <div class="tab-item-page__content" data-hoge="たぶ3">
+                    <p>タブページ３</p>
+                </div>
+            </li>
+        </ul>
+        <div class="tab-body">
+        </div>
+    </div>
+
+    <script>
+        $(function(){
+            var $tab = $("#tab1");
+            var group = new bemtab.TabButtonGroup($tab);
+
+            bemtab.initTabButton(1, "tab1", group,
+                function(content){
+                    content.append("<p>" + new Date() + "</p>");
+                },
+                true);
+
+            bemtab.initTabButton(2, "tab2", group,
+                function(content){
+                    alert("tab2");
+                });
+
+            bemtab.initTabButton(3, "tab3", group,
+                function (content) {
+                    var d = new $.Deferred();
+                    var promise = d.promise();
+
+                    promise.then(function(none){
+                        var d = new $.Deferred();
+                        alert("tab3-1");
+                        setTimeout(function(){ d.resolve(); }, 500); //本当はは何らかの非同期な処理
+                        return d.promise();
+                    }).then(function(v){
+                        setTimeout(function(){ alert("tab3-2"); }, 1000);
+                    });
+
+                    d.resolve();
+                });
+
+            group.enabled(true);
+        });
+    </script>
+
+</body>
+</html>

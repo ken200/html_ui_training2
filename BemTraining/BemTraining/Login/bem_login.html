@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html lang="jp" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bem_login.css" />
+    <script src="../Scripts/jquery-1.9.0.min.js"></script>
+    <script src="login.js"></script>
+    <script>
+        $(function(){
+            var login = new bemlogin.Login($("#login1"), new bemlogin.LoginAlert($("#loginAlert1")));
+
+            login.on("login.ok", function () {
+                alert("ログイン成功！！");
+            });
+
+        });
+    </script>
+</head>
+<body>
+
+    <!-- ログインフレーム -->
+    <div class="login-frame">
+
+        <!--ログイン-->
+        <div class="login" id="login1">
+            <div class="login__layout-row">
+                <label for="userid" class="login__ctrl-title">ID:</label>
+                <input name="userid" class="login__userid" type="text" />
+            </div>
+            <div class="login__layout-row">
+                <label for="password" class="login__ctrl-title">パスワード:</label>
+                <input name="password" class="login__password" type="password" />
+            </div>
+            <div class="login__layout-row">
+                <input name="login" value="ログイン" class="login__button" type="button" />
+            </div>
+        </div>
+
+        <!--ログイン失敗時のアラート-->
+        <div class="login-alert" id="loginAlert1">
+            <!--ログインメッセージ-->
+            <div class="result-message">
+                <div class="result-message__summary">ログインに失敗しました。</div>
+                <div class="result-message__fail-detail">IDまたはパスワードが異なります。</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
