@@ -23,6 +23,8 @@
     <Content Include="Login\bem_login.html" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
+    <Content Include="Regist\bem_regist.css" />
+    <Content Include="Regist\bem_regist.html" />
     <Content Include="Scripts\jquery-1.9.0.js" />
     <Content Include="Scripts\jquery-1.9.0.min.js" />
     <Content Include="Tab\bem_tab.css" />
