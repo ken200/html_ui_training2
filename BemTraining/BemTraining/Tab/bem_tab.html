@@ -9,69 +9,140 @@
 </head>
 <body>
 
-    <div class="tab" id="tab1">
-        <ul class="tab-item">
-            <!-- タブページ -->
-            <li class="tab-item-page" data-tabno="1">
-                <a class="tab-item-page__title" href="#">タブ1</a>
-                <div class="tab-item-page__content" data-hoge="たぶ1">
-                    <p>タブページ１</p>
-                </div>
-            </li>
-            <!-- タブページ -->
-            <li class="tab-item-page" data-tabno="2">
-                <a class="tab-item-page__title" href="#">タブ2</a>
-                <div class="tab-item-page__content" data-hoge="たぶ2">
-                    <p>イメージ</p>
-                    <img src="http://dummyimage.com/300x100/000/fff">
-                </div>
-            </li>
-            <!-- タブページ -->
-            <li class="tab-item-page" data-tabno="3">
-                <a class="tab-item-page__title" href="#">タブ3</a>
-                <div class="tab-item-page__content" data-hoge="たぶ3">
-                    <p>タブページ３</p>
-                </div>
-            </li>
-        </ul>
-        <div class="tab-body">
+    <div class="main-container">
+        <div class="tab tab_fill" id="tab1">
+            <ul class="tab-item">
+                <!-- タブページ -->
+                <li class="tab-item-page" data-tabno="1">
+                    <a class="tab-item-page__title" href="#">タブ1</a>
+                    <div class="tab-item-page__content">
+                        <p>タブページ１</p>
+                    </div>
+                </li>
+                <!-- タブページ -->
+                <li class="tab-item-page" data-tabno="2">
+                    <a class="tab-item-page__title" href="#">タブ2</a>
+                    <div class="tab-item-page__content">
+                        <p>イメージ</p>
+                        <img src="http://dummyimage.com/300x100/000/fff">
+                    </div>
+                </li>
+                <!-- タブページ -->
+                <li class="tab-item-page" data-tabno="3">
+                    <a class="tab-item-page__title" href="#">タブ3</a>
+                    <div class="tab-item-page__content">
+                        <p>タブページ３</p>
+                    </div>
+                </li>
+                <!-- タブページ -->
+                <li class="tab-item-page" data-tabno="4">
+                    <a class="tab-item-page__title" href="#">タブ4</a>
+                    <div class="tab-item-page__content">
+                        <!--子タブ-->
+                        <div class="tab tab_fill" id="tab2">
+                            <ul class="tab-item">
+                                <!-- タブページ -->
+                                <li class="tab-item-page" data-tabno="1">
+                                    <a class="tab-item-page__title" href="#">タブ4-1</a>
+                                    <div class="tab-item-page__content">
+                                        <p>タブページ４－１</p>
+                                    </div>
+                                </li>
+                                <!-- タブページ -->
+                                <li class="tab-item-page" data-tabno="2">
+                                    <a class="tab-item-page__title" href="#">タブ4-2</a>
+                                    <div class="tab-item-page__content">
+                                        <p>タブページ４－２</p>
+                                    </div>
+                                </li>
+                                <!-- タブページ -->
+                                <li class="tab-item-page" data-tabno="3">
+                                    <a class="tab-item-page__title" href="#">タブ4-3</a>
+                                    <div class="tab-item-page__content">
+                                        <!--子タブ-->
+                                        <div class="tab tab_fill" id="tab3">
+                                            <ul class="tab-item">
+                                                <!-- タブページ -->
+                                                <li class="tab-item-page" data-tabno="1">
+                                                    <a class="tab-item-page__title" href="#">タブ4-3-1</a>
+                                                    <div class="tab-item-page__content">
+                                                        <p>タブページ4-3-1</p>
+                                                    </div>
+                                                </li>
+                                                <!-- タブページ -->
+                                                <li class="tab-item-page" data-tabno="2">
+                                                    <a class="tab-item-page__title" href="#">タブ4-3-2</a>
+                                                    <div class="tab-item-page__content">
+                                                        <p>タブページ4-3-2</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-body" data-groupno="3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="tab-body" data-groupno="2">
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+            <div class="tab-body" data-groupno="1">
+            </div>
         </div>
     </div>
 
     <script>
-        $(function(){
+        $(function () {
+
             var $tab = $("#tab1");
-            var group = new bemtab.TabButtonGroup($tab);
+            var group = new bemtab.TabButtonGroup($tab,1);
 
             bemtab.initTabButton(1, "tab1", group,
-                function(content){
-                    content.append("<p>" + new Date() + "</p>");
+                function($content){
+                    //content.append("<p>" + new Date() + "</p>");
                 },
                 true);
 
             bemtab.initTabButton(2, "tab2", group,
-                function(content){
-                    alert("tab2");
+                function($content){
+                    //alert("tab2");
                 });
 
             bemtab.initTabButton(3, "tab3", group,
-                function (content) {
-                    var d = new $.Deferred();
-                    var promise = d.promise();
-
-                    promise.then(function(none){
-                        var d = new $.Deferred();
-                        alert("tab3-1");
-                        setTimeout(function(){ d.resolve(); }, 500); //本当はは何らかの非同期な処理
-                        return d.promise();
-                    }).then(function(v){
-                        setTimeout(function(){ alert("tab3-2"); }, 1000);
-                    });
-
-                    d.resolve();
+                function ($content) {
+                    //var d = new $.Deferred();
+                    //var promise = d.promise();
+                    //promise.then(function(none){
+                    //    var d = new $.Deferred();
+                    //    alert("tab3-1");
+                    //    setTimeout(function(){ d.resolve(); }, 500); //本当はは何らかの非同期な処理
+                    //    return d.promise();
+                    //}).then(function(v){
+                    //    setTimeout(function(){ alert("tab3-2"); }, 1000);
+                    //});
+                    //d.resolve();
                 });
 
+            bemtab.initTabButton(4, "tab4", group, function ($content) {});
             group.enabled(true);
+
+
+            var group2 = new bemtab.TabButtonGroup($("#tab2"), 2);
+            bemtab.initTabButton(1, "tab5", group2, function ($content) { });
+            bemtab.initTabButton(2, "tab6", group2, function ($content) { }, true);
+            bemtab.initTabButton(3, "tab7", group2, function ($content) { });
+            group2.enabled(true);
+
+
+            var group3 = new bemtab.TabButtonGroup($("#tab3"), 3);
+            bemtab.initTabButton(1, "tab8", group3, function ($content) { });
+            bemtab.initTabButton(2, "tab9", group3, function ($content) { }, true);
+            group3.enabled(true);
+
         });
     </script>
 

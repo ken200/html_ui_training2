@@ -5,8 +5,9 @@ var bemtab;
     * タブボタングループ
     */
     var TabButtonGroup = (function () {
-        function TabButtonGroup($tab) {
+        function TabButtonGroup($tab, groupNo) {
             this.$tab = $tab;
+            this.groupNo = groupNo;
             this.bloadCastEventName = "tabgroup.change";
             this._enabled = false;
         }
@@ -45,6 +46,7 @@ var bemtab;
     var TabView = (function () {
         function TabView(tabNo, group) {
             var pageName = "tab-item-page";
+            var bodyName = "tab-body";
 
             var getJqObj = function (className, tabNo, group) {
                 /*
@@ -60,13 +62,17 @@ var bemtab;
                     //jQueryでの属性による要素抽出は [AttrName='Value'] となるので注意すること。
                     return $("." + pageName + "[data-tabno='" + tabNo.toString() + "']", group.$tab);
                 };
-                return className === pageName ? _getPage() : $("." + className, _getPage());
+                return className === pageName ? _getPage() : $("." + className, _getPage()).first();
+            };
+
+            var getBodyObj = function () {
+                return $("." + bodyName + "[data-groupno='" + group.groupNo.toString() + "']", group.$tab).first();
             };
 
             this._$title = getJqObj(pageName + "__title", tabNo, group);
             this._$content = getJqObj(pageName + "__content", tabNo, group);
             this._$page = getJqObj(pageName, tabNo, group);
-            this._$body = $("." + "tab-body", group.$tab);
+            this._$body = getBodyObj();
             this._activeTitle = pageName + "__title_active";
             this._activeContent = pageName + "__content_active";
         }
@@ -128,6 +134,7 @@ var bemtab;
                 tabv.unselectTab(active);
                 active = false;
             }
+            e.stopPropagation(); //イベントは同階層だけとする。
         });
 
         tabv.onTitleClick(function () {

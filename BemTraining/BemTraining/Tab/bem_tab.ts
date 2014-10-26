@@ -10,7 +10,7 @@ module bemtab {
         private bloadCastEventName: string = "tabgroup.change";
         private _enabled: boolean;
 
-        constructor(public $tab : JQuery) {
+        constructor(public $tab : JQuery, public groupNo) {
             this._enabled = false;
         }
 
@@ -56,9 +56,9 @@ module bemtab {
         constructor(tabNo: number, group: TabButtonGroup) {
 
             var pageName = "tab-item-page";
+            var bodyName = "tab-body";
 
             var getJqObj = (className: string, tabNo: number, group: TabButtonGroup) => {
-
                 /*
                  * データ属性を使った要素取得について
                  * 
@@ -68,18 +68,21 @@ module bemtab {
                  * 現状、htmlとJavaScriptの両方にタブNoを指定する必要があるのが気持ち悪いので改善はしたい。
                  * 
                  */
-
                 var _getPage = () => {
                     //jQueryでの属性による要素抽出は [AttrName='Value'] となるので注意すること。
                     return $("." + pageName + "[data-tabno='" + tabNo.toString() + "']", group.$tab);
                 };
-                return className === pageName ? _getPage() : $("." + className, _getPage());
-            }
+                return className === pageName ? _getPage() : $("." + className, _getPage()).first();
+            };
 
-            this._$title = getJqObj(pageName + "__title", tabNo, group);
-            this._$content = getJqObj(pageName + "__content", tabNo, group);
+            var getBodyObj = () => {
+                return $("." + bodyName + "[data-groupno='" + group.groupNo.toString() + "']", group.$tab).first();
+            };
+
+            this._$title = getJqObj(pageName + "__title", tabNo, group)
+            this._$content = getJqObj(pageName + "__content", tabNo, group)
             this._$page = getJqObj(pageName, tabNo, group);
-            this._$body = $("." + "tab-body", group.$tab);
+            this._$body = getBodyObj();
             this._activeTitle = pageName + "__title_active";
             this._activeContent =  pageName + "__content_active";
         }
@@ -142,6 +145,7 @@ module bemtab {
                 tabv.unselectTab(active);
                 active = false;
             }
+            e.stopPropagation();  //イベントは同階層だけとする。
         });
 
         tabv.onTitleClick(() => {
