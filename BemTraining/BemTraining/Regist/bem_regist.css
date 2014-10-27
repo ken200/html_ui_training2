@@ -6,60 +6,110 @@
 
 ul{
     list-style:none;
+    line-height: 1;
 }
 
 a{
     text-decoration:none;
 }
 
+/*コンテナ*/
+
 .main-container
 {
     margin: 10px;
-    width: 500px;
-    height: 200px;
+    width: 1200px;
+    height: 800px;
     border: 1px solid #000;
 }
 
-/* 登録ボックス */
-
-.regist{
-
+.regist-general-operation{
+    width: 100%;
+    height: 10%;
+    display: table;
 }
 
-.regist_fill{
+.regist-general-operation__item{
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.regist-general-operation__item a{
+    display: block;
+    width: 10%;
+    margin-left: 90%;
+    text-align: center;
+    height: 50%;
+    background: #ffd800;
+    border: 1px solid #000;
+}
+
+.regist-record-list{
+    width: 100%;
+    height: 90%;
+    overflow-x: scroll;
+    background: #808080;
+}
+
+/* レコードデータ */
+
+.record{
+    border: 1px solid #000;
+    height: 100%;
+}
+
+.record_fill{
     width: 100%;
     height: 100%;
 }
 
-.regist-operation{
+.record_col5{
+    width: 20%;
+}
+
+.record_templ{
+    display: none;
+}
+
+/* レコード操作パネル */
+
+.record-operation{
     display: table;
     padding: 0;
     margin: 0;
     table-layout: fixed;
     width: 100%;
     height: 10%;
+    background: #ff8f8f;
 }
 
-/*.regist-operation__item{
+.record-operation__item{
     display: table-cell;
+    vertical-align: middle;
+    height: 100%;
 }
 
-.regist-operation__item a{
+.record-operation__item a{
     display: block;
     text-align: center;
-    vertical-align: middle;
     margin-left: 10%;
     margin-right: 10%;
     width: 80%;
+    height: 90%;
     background: #f5e7e7;
-    padding-top: 10px;
-    padding-bottom: 10px;
     border: 1px solid #000;
-}*/
+}
 
+/*レコードデータ*/
 
-.regist-data{
+.record-data{
     height: 90%;
     width: 100%;
     background: #ffd800;
+}
+
+
+#js-record-template{
+    display: none;
 }

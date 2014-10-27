@@ -8,27 +8,29 @@
 <body>
 
     <div class="main-container">
-
-        <div class="regist regist_fill">
-
-            <ul class="regist-operation">
-
-                <li class="regist-operation__item"><a href="#">追加</a></li>
-
-                <!--<li class="regist-operation__item">
-                    <a href="#">削除</a>
-                </li>
-
-                <li class="regist-operation__item">
-                    <a href="#">更新</a>
-                </li>-->
-
-            </ul>
-
-            <div class="regist-data">
-
+        <!--基本操作-->
+        <ul class="regist-general-operation">
+            <li class="regist-general-operation__item">
+                <a id="js-add-record" href="#">レコード追加</a>
+            </li>
+        </ul>
+        <!--レコードリスト-->
+        <div class="regist-record-list">
+            <!--1レコード-->
+            <div class="record">
+                <!--レコードに対する操作-->
+                <ul class="record-operation">
+                    <li class="record-operation__item">
+                        <a href="#">削除</a>
+                    </li>
+                    <li class="record-operation__item">
+                        <a href="#">更新</a>
+                    </li>
+                </ul>
+                <!--レコードデータ-->
+                <div class="record-data">
+                </div>
             </div>
-
         </div>
 
     </div>
