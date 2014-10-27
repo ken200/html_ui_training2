@@ -18,7 +18,7 @@ a{
 .main-container
 {
     margin: 10px;
-    width: 1200px;
+    width: 1500px;
     height: 800px;
     border: 1px solid #000;
 }
@@ -48,8 +48,22 @@ a{
 .regist-record-list{
     width: 100%;
     height: 90%;
-    overflow-x: scroll;
+    overflow-x:scroll;
     background: #808080;
+}
+
+
+.regist-record-list-template{
+    display: none;
+}
+
+.regist-record-list-view{
+    width: 100%;
+    height: 100%;
+}
+
+.record_templ{
+    display: none;
 }
 
 /* レコードデータ */
@@ -57,6 +71,7 @@ a{
 .record{
     border: 1px solid #000;
     height: 100%;
+    float: left;
 }
 
 .record_fill{
@@ -64,13 +79,7 @@ a{
     height: 100%;
 }
 
-.record_col5{
-    width: 20%;
-}
 
-.record_templ{
-    display: none;
-}
 
 /* レコード操作パネル */
 
@@ -110,6 +119,5 @@ a{
 }
 
 
-#record-template{
-    display: none;
-}
+
+

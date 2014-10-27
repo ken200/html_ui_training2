@@ -8,7 +8,6 @@
     <script src="bem_regist.js"></script>
 </head>
 <body>
-
     <div class="main-container">
         <!--基本操作-->
         <ul class="regist-general-operation">
@@ -17,25 +16,27 @@
             </li>
         </ul>
         <!--レコードリスト-->
-        <div class="regist-record-list">
-            <!--1レコード-->
-            <div id="record-template" class="record" data-col="5">
-                <!--レコードに対する操作-->
-                <ul class="record-operation">
-                    <li class="record-operation__item">
-                        <a href="#">削除</a>
-                    </li>
-                    <li class="record-operation__item">
-                        <a href="#">更新</a>
-                    </li>
-                </ul>
-                <!--レコードデータ-->
-                <div class="record-data">
+        <div id="record-viewer" class="regist-record-list">
+            <!-- テンプレート-->
+            <div class="regist-record-list-template" data-col="5">
+                <div class="record">
+                    <!--レコードに対する操作-->
+                    <ul class="record-operation">
+                        <li class="record-operation__item">
+                            <a href="#">削除</a>
+                        </li>
+                        <li class="record-operation__item">
+                            <a href="#">更新</a>
+                        </li>
+                    </ul>
+                    <!--レコードデータ-->
+                    <div class="record-data">
+                    </div>
                 </div>
             </div>
+            <!-- 表示エリア -->
+            <div class="regist-record-list-view"></div>
         </div>
-
     </div>
-
 </body>
 </html>
