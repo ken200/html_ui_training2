@@ -23,8 +23,8 @@
                 <li class="tab-item-page" data-tabno="2">
                     <a class="tab-item-page__title" href="#">タブ2</a>
                     <div class="tab-item-page__content">
-                        <p>イメージ</p>
-                        <img src="http://dummyimage.com/300x100/000/fff">
+                        <div class="dummy-thumbnail">
+                        </div>
                     </div>
                 </li>
                 <!-- タブページ -->
@@ -108,8 +108,15 @@
                 true);
 
             bemtab.initTabButton(2, "tab2", group,
-                function($content){
-                    //alert("tab2");
+                function ($content) {
+                    var $c = $content;
+                    var addImg = function () {
+                        setTimeout(function () {
+                            $(".dummy-thumbnail", $c).append("<img src='http://dummyimage.com/100x100/000/fff'>");
+                            addImg();
+                        }, 1000);
+                    };
+                    addImg();
                 });
 
             bemtab.initTabButton(3, "tab3", group,
