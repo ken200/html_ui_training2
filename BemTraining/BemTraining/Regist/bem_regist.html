@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bem_regist.css" />
+    <script src="../Scripts/jquery-1.9.0.min.js"></script>
+    <script src="bem_regist.js"></script>
+</head>
+<body>
+
+    <div class="main-container">
+        <!--基本操作-->
+        <ul class="regist-general-operation">
+            <li class="regist-general-operation__item">
+                <a id="btn-add-record" href="#">レコード追加</a>
+            </li>
+        </ul>
+        <!--レコードリスト-->
+        <div class="regist-record-list">
+            <!--1レコード-->
+            <div id="record-template" class="record" data-col="5">
+                <!--レコードに対する操作-->
+                <ul class="record-operation">
+                    <li class="record-operation__item">
+                        <a href="#">削除</a>
+                    </li>
+                    <li class="record-operation__item">
+                        <a href="#">更新</a>
+                    </li>
+                </ul>
+                <!--レコードデータ-->
+                <div class="record-data">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
