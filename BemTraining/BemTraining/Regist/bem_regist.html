@@ -38,5 +38,14 @@
             <div class="regist-record-list-view"></div>
         </div>
     </div>
+    <script>
+        $(function () {
+            var v = new bemreg.RecordView($("#record-viewer"));
+            $("#btn-add-record").click(function () {
+                v.add(new bemreg.RecordData());
+            });
+        });
+    </script>
+
 </body>
 </html>

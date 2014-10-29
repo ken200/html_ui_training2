@@ -23,18 +23,25 @@ var bemreg;
 
     var RecordView = (function () {
         function RecordView($root) {
-            var $templateRoot = $(".regist-record-list-template", $root);
+            this.$root = $root;
+        }
+        RecordView.prototype.oneinit = function () {
+            var $templateRoot = $(".regist-record-list-template", this.$root);
             var cols = parseInt($templateRoot.attr("data-col"), 10);
-            this.$view = $(".regist-record-list-view", $root);
+            this.$view = $(".regist-record-list-view", this.$root);
             this.recordWidth = this.$view.width() / cols;
             this.$template = $(".record", $templateRoot).clone().width(this.recordWidth).removeAttr("data-col");
             this.pageCounter = new RecordViewPageCounter(cols);
-        }
+            this.oneinit = function () {
+            };
+        };
+
         RecordView.prototype.getOnePageWidth = function () {
             return this.recordWidth * this.pageCounter.columnPerPage;
         };
 
         RecordView.prototype.add = function (rec) {
+            this.oneinit();
             if (this.pageCounter.countup()) {
                 //改ページ
                 this.$view.width(this.$view.width() + this.getOnePageWidth());
@@ -45,11 +52,4 @@ var bemreg;
     })();
     bemreg.RecordView = RecordView;
 })(bemreg || (bemreg = {}));
-
-$(function () {
-    var v = new bemreg.RecordView($("#record-viewer"));
-    $("#btn-add-record").click(function () {
-        v.add(new bemreg.RecordData());
-    });
-});
 //# sourceMappingURL=bem_regist.js.map

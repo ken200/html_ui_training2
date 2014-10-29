@@ -4,8 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
     <link rel="stylesheet" type="text/css" href="bem_tab.css" />
+    <link rel="stylesheet" type="text/css" href="../Regist/bem_regist.css" />
     <script src="../Scripts/jquery-1.9.0.min.js"></script>
     <script src="bem_tab.js"></script>
+    <script src="../Regist/bem_regist.js"></script>
 </head>
 <body>
 
@@ -66,7 +68,34 @@
                                                 <li class="tab-item-page" data-tabno="1">
                                                     <a class="tab-item-page__title" href="#">タブ4-3-1</a>
                                                     <div class="tab-item-page__content">
-                                                        <p>タブページ4-3-1</p>
+                                                        <!--Regist 基本操作-->
+                                                        <ul class="regist-general-operation">
+                                                            <li class="regist-general-operation__item">
+                                                                <a id="btn-add-record2" href="#">レコード追加</a>
+                                                            </li>
+                                                        </ul>
+                                                        <!--Regist レコードリスト-->
+                                                        <div id="record-viewer2" class="regist-record-list">
+                                                            <!-- テンプレート-->
+                                                            <div class="regist-record-list-template" data-col="5">
+                                                                <div class="record">
+                                                                    <!--レコードに対する操作-->
+                                                                    <ul class="record-operation">
+                                                                        <li class="record-operation__item">
+                                                                            <a href="#">削除</a>
+                                                                        </li>
+                                                                        <li class="record-operation__item">
+                                                                            <a href="#">更新</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <!--レコードデータ-->
+                                                                    <div class="record-data">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 表示エリア -->
+                                                            <div class="regist-record-list-view"></div>
+                                                        </div>
                                                     </div>
                                                 </li>
                                                 <!-- タブページ -->
@@ -149,6 +178,13 @@
             bemtab.initTabButton(1, "tab8", group3, function ($content) { });
             bemtab.initTabButton(2, "tab9", group3, function ($content) { }, true);
             group3.enabled(true);
+
+
+            var reg = new bemreg.RecordView($("#record-viewer2"));
+            $("#btn-add-record2").click(function () {
+                reg.add(new bemreg.RecordData());
+            });
+
 
         });
     </script>
