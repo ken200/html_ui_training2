@@ -4,40 +4,48 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>ページ切り替え</title>
     <link rel="stylesheet" href="bem_page.css" />
+    <script src="../Scripts/jquery-1.9.0.min.js"></script>
+    <script src="../Scripts/underscore.min.js"></script>
 </head>
 <body>
 
     <!-- 今回からMindBEMding -->
 
-    <div class="container">
-        <div class="page-content">
-            メインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツ
-            メインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツ
-            メインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツ
-            メインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツメインコンテンツ
-        </div>
+    <div class="container" id="container1">
+        <div class="page-content"></div>
         <div class="pager">
             <ul class="pager-prev">
                 <li class="page-prev__goto-start-page"><a href="#"> << </a></li>
                 <li class="page-prev__goto-prev-page"><a href="#"> < </a></li>
             </ul>
             <ul class="pager-jump">
-                <li class="pager-jump__page"><a href="#">1</a></li>
-                <li class="pager-jump__page"><a href="#">2</a></li>
-                <li class="pager-jump__page"><a href="#">3</a></li>
+                <li class="pager-jump__page pager-jump__page--template pager-jump__page--current"><a href="#"> </a></li>
             </ul>
             <ul class="pager-next">
                 <li class="pager-next__goto-next-page"><a href="#"> > </a></li>
                 <li class="pager-next__goto-last-page"><a href="#"> >> </a></li>
             </ul>
         </div>
+    </div>
 
-        <div class="dev-content">
-            <label for="txtPageCount">ページ数</label>
-            <input type="text" name="txtPageCount" value="10" />
-            <button name="btnCreatePageData">データ再作成</button>
+
+    <div class="container" id="container2">
+        <div class="page-content"></div>
+        <div class="pager">
+            <ul class="pager-prev">
+                <li class="page-prev__goto-start-page"><a href="#"> << </a></li>
+                <li class="page-prev__goto-prev-page"><a href="#"> < </a></li>
+            </ul>
+            <ul class="pager-jump">
+                <li class="pager-jump__page pager-jump__page--template pager-jump__page--current"><a href="#"> </a></li>
+            </ul>
+            <ul class="pager-next">
+                <li class="pager-next__goto-next-page"><a href="#"> > </a></li>
+                <li class="pager-next__goto-last-page"><a href="#"> >> </a></li>
+            </ul>
         </div>
     </div>
+
     <script type="text/javascript" src="bem_page.js"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@ a{
 
     .page-content{
         width: 100%;
-        height: 600px;
+        height: 300px;
         background: #b4f2e8;
         display: block;
     }
@@ -48,6 +48,18 @@ a{
                 padding-bottom: 10px;
                 background: #ffd800;
             }
+
+                .page-prev__goto-start-page a:visited, .page-prev__goto-prev-page a:visited, .pager-next__goto-last-page a:visited, .pager-next__goto-next-page a:visited{
+                    color: #000;
+                }
+
+                .page-prev__goto-start-page a:link, .page-prev__goto-prev-page a:link, .pager-next__goto-last-page a:link, .pager-next__goto-next-page a:link{
+                    color: #000;
+                }
+
+                .page-prev__goto-start-page a:hover, .page-prev__goto-prev-page a:hover, .pager-next__goto-last-page a:hover, .pager-next__goto-next-page a:hover{
+                    color: #ff0000;
+                }
 
             .page-prev__goto-prev-page, .pager-next__goto-next-page{
                 text-align: center;
@@ -76,20 +88,26 @@ a{
                 padding-bottom: 10px;
                 text-align: center;
             }
+                .pager-jump__page a:visited {
+                    color: #000;
+                }
 
-.dev-content{
-    height: 50px;
-    padding: 15px;
-    text-align: right;
-    background: #95b7ed;
-    border: 1px solid #000;
-}
+                .pager-jump__page a:link {
+                    color: #000;
+                }
 
-    .dev-content input{
-        width: 50px;
-        text-align: right;
-    }
+                .pager-jump__page a:hover {
+                    color: #ff0000;
+                }
 
-    .dev-content button{
-        padding: 1px;
-    }
+            .pager-jump__page--template{
+                display: none;
+            }
+
+            .pager-jump__page--hide{
+                display: none;
+            }
+
+            .pager-jump__page--current{
+                background: #b6ff00;
+            }
