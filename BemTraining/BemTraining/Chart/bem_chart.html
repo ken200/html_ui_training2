@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>チャート</title>
+    <link rel="stylesheet" href="bem_chart.css" />
+    <script type="text/javascript" src="../Scripts/jquery-1.9.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <table class="chart" id="chart1">
+            <!--ヘッダー(年月)-->
+            <tr class="chart-header__month">
+                <td class="chart-header__month-blank" rowspan="2"> </td>
+                <td class="chart-header__month-title"></td>
+            </tr>
+            <!--ヘッダー(日)-->
+            <tr class="chart-header__day">
+            </tr>
+            <!--詳細行-->
+            <tr class="chart-report">
+                <!--タスク名セル-->
+                <td class="chart-report__title"></td>
+                <!--進捗セル-->
+                <td class="chart-report__daily-report"></td>
+            </tr>
+        </table>
+    </div>
+    <script src="bem_chart.js"></script>
+</body>
+</html>

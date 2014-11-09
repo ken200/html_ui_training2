@@ -1,0 +1,63 @@
+﻿*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+ul{
+    list-style:none;
+    line-height: 1;
+}
+
+a{
+    text-decoration:none;
+}
+
+td{
+    text-align: center;
+    border: 1px solid #000;
+}
+
+tr{
+    height: 30px;
+}
+
+.container{
+    margin: 10px;
+    width: 1800px;
+    height: 100%;
+    padding: 20px;
+    overflow-x: scroll;
+    border: 1px solid #000;
+}
+
+.chart{
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+.chart-header__month-title{
+    text-align: left;
+}
+
+.chart-header__day--holiday{
+    background: #808080;
+    color: #FFF;
+}
+
+.chart-report__title{
+    text-align: left;
+}
+
+.chart-report__daily-report:hover{
+    cursor: pointer;
+}
+
+.chart-report__daily-report--holiday{
+    background: #808080;
+}
+
+
+.chart-report__daily-report--selected{
+    background: #ff0000;
+}

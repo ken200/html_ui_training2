@@ -18,6 +18,8 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Chart\bem_chart.css" />
+    <Content Include="Chart\bem_chart.html" />
     <Content Include="index.html" />
     <Content Include="Login\bem_login.css" />
     <Content Include="Login\bem_login.html" />
@@ -37,6 +39,7 @@
     <Content Include="Scripts\jquery-1.9.0.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Chart\bem_chart.ts" />
     <TypeScriptCompile Include="Login\login.ts" />
     <TypeScriptCompile Include="Pager\bem_page.ts" />
     <TypeScriptCompile Include="Regist\bem_regist.ts" />
