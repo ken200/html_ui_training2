@@ -1,79 +1,24 @@
 ﻿/// <reference path="../Scripts/typings/jquery/jquery.d.ts" />
 var bemchart;
 (function (bemchart) {
-    /**
-    * カレンダー
-    */
-    (function (calendar) {
-        var holiday = [
-            {
-                year: 2014, month: 10, day: [24, 29, 30]
-            },
-            {
-                year: 2014, month: 11, day: [1, 2, 3, 8, 9, 15, 16, 22, 23, 24, 29, 30]
-            },
-            {
-                year: 2014, month: 12, day: [6, 7, 13, 14, 20, 21, 23, 27, 28, 29, 30, 31]
-            },
-            {
-                year: 2015, month: 1, day: [1, 2, 3, 4, 10, 11, 12, 17, 18, 24, 25, 31]
-            },
-            {
-                year: 2015, month: 2, day: [1, 7, 8, 11, 14, 15, 21, 22, 28]
-            },
-            {
-                year: 2015, month: 3, day: []
-            },
-            {
-                year: 2015, month: 4, day: []
-            }
-        ];
-
-        function isHoliday(year, month, day) {
-            for (var i = 0; i < holiday.length; i++) {
-                if (holiday[i].year != year)
-                    continue;
-                if (holiday[i].month != month)
-                    continue;
-                for (var j = 0; j < holiday[i].day.length; j++) {
-                    if (holiday[i].day[j] == day)
-                        return true;
-                }
-            }
-            return false;
-        }
-        calendar.isHoliday = isHoliday;
-        ;
-    })(bemchart.calendar || (bemchart.calendar = {}));
-    var calendar = bemchart.calendar;
-})(bemchart || (bemchart = {}));
-
-var bemchart;
-(function (bemchart) {
-    /**
-    * 設定
-    */
-    (function (settings) {
-        /**
-        * テーブル設定
-        */
-        settings.tableSize = {
-            titleWidth: 200,
-            dayWidth: 20
-        };
-    })(bemchart.settings || (bemchart.settings = {}));
-    var settings = bemchart.settings;
-})(bemchart || (bemchart = {}));
-
-var bemchart;
-(function (bemchart) {
     (function (model) {
         var Schedule = (function () {
-            function Schedule(id, name, dates) {
+            function Schedule(id, name, dateRanges) {
                 this.taskId = id;
                 this.taskName = name;
-                this.dates = dates;
+                this.dateRanges = dateRanges;
             }
+            Schedule.prototype.inRange = function (date) {
+                var d = new Date(date.year, date.month, date.day);
+                for (var i = 0; i < this.dateRanges.length; i++) {
+                    var range = this.dateRanges[i];
+                    var from = new Date(range.from.year, range.from.month, range.from.day);
+                    var to = new Date(range.to.year, range.to.month, range.to.day);
+                    if (from.getTime() > d.getTime() || d.getTime() > to.getTime())
+                        return false;
+                }
+                return true;
+            };
             return Schedule;
         })();
         model.Schedule = Schedule;
@@ -83,6 +28,8 @@ var bemchart;
 
 var bemchart;
 (function (bemchart) {
+    
+
     var classNames = {
         CHART_REPORT: "chart-report",
         DAILY_REPORT: "chart-report__daily-report",
@@ -94,13 +41,23 @@ var bemchart;
     * 報告セル
     */
     var ChartDayCell = (function () {
-        function ChartDayCell($root) {
+        function ChartDayCell($root, bindDate, schedule) {
             var _this = this;
             this.$root = $root;
-            $root.click(function (e) {
+            this.bindDate = bindDate;
+            this.schedule = schedule;
+
+            this.$root.click(function (e) {
                 var $this = _this.$root;
                 e.shiftKey ? _this.selectRange($this) : _this.select($this);
             });
+
+            if (bemchart.calendar.isHoliday(bindDate)) {
+                $root.addClass(classNames.DAILY_REPORT_HOLIDAY);
+            }
+
+            if (schedule.inRange(bindDate))
+                this.select($root);
         }
         ChartDayCell.prototype.selectRange = function ($endCell) {
             //過去にさかのぼり、最初に見つかった選択セル～ $end間を選択状態にする。
@@ -138,22 +95,53 @@ var bemchart;
             this.scheduleLoader = new ScheduleLoader($root, $("." + classNames.CHART_REPORT, $root));
         }
         /**
+        * 外部パラメーター値({year,month}～{year,month})から内部データ形式を作成する
+        */
+        Chart.prototype.createMonthDayLength = function (from, to) {
+            var rangeMonth = (to.year * 12 + to.month) - (from.year * 12 + from.month) + 1;
+            if (rangeMonth < 0)
+                throw new Error("指定範囲の整合性エラー。");
+
+            var viewRange = new Array();
+            var ym = new Date(from.year, from.month, 0);
+            var dayLength = ym.getDate();
+
+            for (var i = 0; i < rangeMonth; i++) {
+                var mdl = {
+                    year: ym.getFullYear(),
+                    month: ym.getMonth() + 1,
+                    length: dayLength
+                };
+                viewRange.push(mdl);
+
+                if (mdl.month == 12) {
+                    ym = new Date(mdl.year + 1, 1, 0);
+                } else {
+                    ym = new Date(mdl.year, mdl.month + 1, 0);
+                }
+                dayLength = ym.getDate();
+            }
+
+            return viewRange;
+        };
+
+        /**
         * 初期化
         */
-        Chart.prototype.initialize = function (viewRange) {
-            this.changeRange(viewRange);
+        Chart.prototype.initialize = function (from, to) {
+            this.changeRange(from, to);
+            this.initTableSize();
         };
 
         /**
         * 表示範囲の変更
         */
-        Chart.prototype.changeRange = function (viewRange) {
-            this.viewRange = viewRange;
+        Chart.prototype.changeRange = function (from, to) {
+            this.viewRange = this.createMonthDayLength(from, to);
             this.initMonthTitle(function (y, m) {
                 return y + "年" + m + "月";
             });
             this.initDayTitle();
-            this.initTableSize(bemchart.settings.tableSize);
         };
 
         /**
@@ -183,7 +171,7 @@ var bemchart;
                 var mInfo = this.viewRange[i];
                 for (var j = 1; j <= mInfo.length; j++) {
                     var $dt = $("<td>" + (j <= 9 ? "0" : "") + j.toString() + "</td>");
-                    if (bemchart.calendar.isHoliday(mInfo.year, mInfo.month, j)) {
+                    if (bemchart.calendar.isHoliday({ year: mInfo.year, month: mInfo.month, day: j })) {
                         $dt.addClass("chart-header__day--holiday");
                     }
                     $dayHeader.append($dt);
@@ -194,13 +182,15 @@ var bemchart;
         /**
         * チャートテーブルサイズの初期化
         */
-        Chart.prototype.initTableSize = function (tableSettings) {
+        Chart.prototype.initTableSize = function (titleWidth, dayWidth) {
+            if (typeof titleWidth === "undefined") { titleWidth = 200; }
+            if (typeof dayWidth === "undefined") { dayWidth = 20; }
             var dayTotal = 0;
             for (var i = 0; i < this.viewRange.length; i++) {
                 dayTotal += this.viewRange[i].length;
             }
             var $chart = this.$root;
-            $chart.width((tableSettings.titleWidth + 2) + dayTotal * (tableSettings.dayWidth + 2));
+            $chart.width((titleWidth + 2) + dayTotal * (dayWidth + 2));
         };
 
         /**
@@ -246,12 +236,8 @@ var bemchart;
             for (var i = 0; i < viewRange.length; i++) {
                 var mInfo = viewRange[i];
                 for (var j = 1; j <= mInfo.length; j++) {
-                    var $dt = newRow.$report.clone();
-                    $dt.text(" ");
-                    new ChartDayCell($dt);
-                    if (bemchart.calendar.isHoliday(mInfo.year, mInfo.month, j)) {
-                        $dt.addClass(classNames.DAILY_REPORT_HOLIDAY);
-                    }
+                    var $dt = newRow.$report.clone().text(" ");
+                    new ChartDayCell($dt, { year: mInfo.year, month: mInfo.month, day: j }, schedule);
                     newRow.$root.append($dt);
                 }
             }
@@ -264,18 +250,21 @@ var bemchart;
 
 $(function () {
     var chart = new bemchart.Chart($("#chart1"));
-    chart.initialize([
-        { year: 2014, month: 10, length: 31 },
-        { year: 2014, month: 11, length: 30 },
-        { year: 2014, month: 12, length: 31 },
-        { year: 2015, month: 1, length: 31 },
-        { year: 2015, month: 2, length: 28 },
-        { year: 2015, month: 3, length: 31 },
-        { year: 2015, month: 4, length: 30 }
-    ]);
+    chart.initialize({ year: 2014, month: 11 }, { year: 2015, month: 3 });
 
-    for (var i = 1; i <= 20; i++) {
-        chart.loadSchedule(new bemchart.model.Schedule(i.toString(), "予定タスクその" + i.toString(), null));
-    }
+    chart.loadSchedule(new bemchart.model.Schedule("00001", "予定タスクその1", [{
+            from: { year: 2014, month: 11, day: 1 },
+            to: { year: 2014, month: 11, day: 10 }
+        }]));
+
+    chart.loadSchedule(new bemchart.model.Schedule("00002", "予定タスクその2", [{
+            from: { year: 2014, month: 11, day: 16 },
+            to: { year: 2014, month: 11, day: 20 }
+        }]));
+
+    chart.loadSchedule(new bemchart.model.Schedule("00003", "予定タスクその3", [{
+            from: { year: 2014, month: 11, day: 25 },
+            to: { year: 2014, month: 12, day: 19 }
+        }]));
 });
 //# sourceMappingURL=bem_chart.js.map
